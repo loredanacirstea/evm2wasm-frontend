@@ -53,16 +53,17 @@ const mainView = (state, prev, send) => html `
       <input type="checkbox" checked=${state.inlineOps} onchange=${(e) => {
         send('toggle', 'inlineOps')
         send('compile', state.evmCode)
-      }}></input>inline EVM opcodes
+      }} />inline EVM opcodes
       <input type="checkbox" checked=${state.pprint} onchange=${(e) => {
         send('toggle', 'pprint')
         send('compile', state.evmCode)
-      }}></input>pretty print
+      }} />pretty print
     </div>
     <div class=${scroll}>
       <code>${state.wastCode}</code>
     </div>
   </main>`
+
 
 app.router((route) => [
   route('/', mainView)
@@ -75,8 +76,10 @@ document.body.appendChild(footer)
 
 function compileEVM (evm, inlineOps, pprint) {
   console.log(evm);
-  return evm2wasm.evm2wast(new Buffer(evm.slice(2), 'hex'), {
+  const source = evm2wasm.evm2wast(new Buffer(evm.slice(2), 'hex'), {
     inlineOps: inlineOps,
     pprint: pprint
   })
+  console.log(source)
+  return source;
 }
