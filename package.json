@@ -12,7 +12,7 @@
   "dependencies": {
     "budo": "^9.1.0",
     "choo": "^3.3.0",
-    "@ark-us/evm2wasm": "^0.0.0",
+    "@ark-us/evm2wasm": "^0.0.1",
     "sheetify": "^5.1.0"
   },
   "browserify": {

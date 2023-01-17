@@ -57,14 +57,10 @@ const clipboardCopy = (text) => {
   document.body.removeChild(aux);
 }
 
-const buildWasm = (text) => {
-
-}
-
 const mainView = (state, prev, send) => html `
   <main>
     <div>
-      <textarea onchange=${(e) => send('compile', e.target.value)}>${demoEVMcode}</textarea>
+      <textarea id="evmcode" onchange=${(e) => send('compile', e.target.value)}>${state.evmCode}</textarea>
       <br>
       <input type="checkbox" checked=${state.inlineOps} onchange=${(e) => {
         send('toggle', 'inlineOps')
@@ -75,8 +71,10 @@ const mainView = (state, prev, send) => html `
         send('compile', state.evmCode)
       }} />pretty print
     </div>
+    <h3>Copy the wast source</h2>
+    <h3>Go to the wat2wasm tool, paste the wast source. Click on download and get the .wasm file</h2>
     <button onclick=${() => clipboardCopy(state.wastCode)}>copy wast</button>
-    <button onclick=${() => buildWasm(state.wastCode)}>download wasm</button>
+    <a href="https://webassembly.github.io/wabt/demo/wat2wasm/" target="_blank">go to wat2wasm</a>
     <div class=${scroll}>
       <code>${state.wastCode}</code>
     </div>
@@ -86,6 +84,10 @@ const mainView = (state, prev, send) => html `
 app.router((route) => [
   route('/', mainView)
 ])
+
+setTimeout(() => {
+  document.getElementById("evmcode").value = demoEVMcode;
+}, 1000);
 
 const tree = app.start()
 document.body.appendChild(header)
@@ -98,6 +100,6 @@ function compileEVM (evm, inlineOps, pprint) {
     inlineOps: inlineOps,
     pprint: pprint
   })
-  console.log(source)
+  // console.log(source)
   return source;
 }
