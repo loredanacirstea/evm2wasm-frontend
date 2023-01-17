@@ -45,6 +45,22 @@ const footer = html`
    transcompiles EVM bytecode to <a href='https://github.com/ewasm/design'>ewasm</a> with <a href='https://github.com/ewasm/evm2wasm/'>evm2wasm</a> | <a href="https://github.com/ewasm/evm2wasm-frontend">source</a> | <a href="https://github.com/ewasm/evm2wasm-frontend/issues">issues</a>
   </footer>`
 
+const clipboardCopy = (text) => {
+  if (navigator.clipboard) {
+      return navigator.clipboard.writeText(text);
+  }
+  const aux = document.createElement("textarea");
+  aux.setAttribute("value", text);
+  document.body.appendChild(aux);
+  aux.select();
+  document.execCommand("copy");
+  document.body.removeChild(aux);
+}
+
+const buildWasm = (text) => {
+
+}
+
 const mainView = (state, prev, send) => html `
   <main>
     <div>
@@ -59,6 +75,8 @@ const mainView = (state, prev, send) => html `
         send('compile', state.evmCode)
       }} />pretty print
     </div>
+    <button onclick=${() => clipboardCopy(state.wastCode)}>copy wast</button>
+    <button onclick=${() => buildWasm(state.wastCode)}>download wasm</button>
     <div class=${scroll}>
       <code>${state.wastCode}</code>
     </div>
