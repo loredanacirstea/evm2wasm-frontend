@@ -1,7 +1,7 @@
 const choo = require('choo')
 const html = require('choo/html')
 const sf = require('sheetify')
-const evm2wasm = require('evm2wasm')
+const evm2wasm = require('@ark-us/evm2wasm')
 const app = choo()
 
 // add global css
@@ -96,7 +96,10 @@ document.body.appendChild(footer)
 
 function compileEVM (evm, inlineOps, pprint) {
   console.log(evm);
-  const source = evm2wasm.evm2wast(new Buffer(evm.slice(2), 'hex'), {
+  if (evm.substring(0, 2) == "0x") {
+    evm = evm.substring(2);
+  }
+  const source = evm2wasm.evm2wast(new Buffer(evm, 'hex'), {
     inlineOps: inlineOps,
     pprint: pprint
   })
