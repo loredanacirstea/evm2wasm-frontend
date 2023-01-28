@@ -10,7 +10,7 @@
   "author": "mjbecze <mb@ethereum.org>",
   "license": "GPL-3.0",
   "dependencies": {
-    "@ark-us/evm2wasm": "^0.0.3",
+    "@ark-us/evm2wasm": "^0.0.4",
     "budo": "^9.1.0",
     "choo": "^3.3.0",
     "sheetify": "^5.1.0"
